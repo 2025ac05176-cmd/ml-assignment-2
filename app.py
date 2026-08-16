@@ -1,7 +1,5 @@
 """
 Student Dropout Prediction - Interactive Model Evaluation Dashboard
-===================================================================
-BITS Pilani WILP | M.Tech (AIML/DSE) | Machine Learning | Assignment 2
 
 Streamlit application that lets a user upload a test CSV, pick one of five
 trained classifiers, and inspect its performance through metrics, a
