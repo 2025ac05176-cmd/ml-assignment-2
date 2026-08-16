@@ -1,5 +1,6 @@
 """
 Student Dropout Prediction - Interactive Model Evaluation Dashboard
+===================================================================
 
 Streamlit application that lets a user upload a test CSV, pick one of five
 trained classifiers, and inspect its performance through metrics, a
@@ -225,14 +226,27 @@ with st.sidebar:
     st.divider()
 
     # --- (a) dataset upload option (CSV) ---
+    # Upload is the primary path, per the assignment requirement. The bundled
+    # fallback exists only so the app is still demonstrable without a download.
     st.markdown("### 📁 Test data")
-    uploaded = st.file_uploader(
-        "Upload test CSV",
-        type=["csv"],
-        help="Must contain the same 34 feature columns used in training. "
-             "Include a 'Target' column to see evaluation metrics.",
+    source_mode = st.radio(
+        "Data source",
+        ["Upload a CSV", "Use bundled test_data.csv"],
+        index=0,
+        help="Upload the 885-row test_data.csv from the repository, or any CSV "
+             "carrying the same 34 feature columns.",
     )
-    use_bundled = st.checkbox("Use bundled test_data.csv", value=True)
+
+    uploaded = None
+    if source_mode == "Upload a CSV":
+        uploaded = st.file_uploader(
+            "Choose test CSV",
+            type=["csv"],
+            help="Must contain the same 34 feature columns used in training. "
+                 "Include a 'Target' column to see evaluation metrics.",
+        )
+
+    use_bundled = source_mode == "Use bundled test_data.csv"
 
     st.divider()
     compare_all = st.checkbox("Compare all 5 models", value=False)
@@ -275,7 +289,17 @@ elif use_bundled:
     source_label = "bundled **test_data.csv**"
 
 if data is None:
-    st.info("👈 Upload a test CSV in the sidebar, or tick **Use bundled test_data.csv** to begin.")
+    st.info(
+        "**👈 Upload a test CSV in the sidebar to begin.**\n\n"
+        "Use `test_data.csv` from this project's repository — it is the 885-row "
+        "held-out split that none of the models saw during training. Any CSV with "
+        "the same 34 feature columns will work; include a `Target` column to see "
+        "evaluation metrics as well as predictions."
+    )
+    st.caption(
+        "No file to hand? Switch the sidebar to **Use bundled test_data.csv** to "
+        "load the same file straight from the repository."
+    )
     st.stop()
 
 data.columns = [c.strip() for c in data.columns]
