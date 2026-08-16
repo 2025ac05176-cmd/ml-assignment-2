@@ -1,0 +1,11 @@
+# Pinned to the exact versions the models in model/*.pkl were trained with.
+# scikit-learn, numpy and joblib MUST stay pinned: the saved pipelines are
+# unpickled at app start-up, and a major-version drift in any of these three
+# breaks deserialisation on Streamlit Community Cloud.
+streamlit==1.61.1
+scikit-learn==1.8.0
+numpy==2.4.4
+joblib==1.5.3
+pandas==3.0.2
+matplotlib==3.10.9
+seaborn==0.13.2
