@@ -1,13 +1,12 @@
 # Predicting Student Dropout and Academic Success
 
 **BITS Pilani — Work Integrated Learning Programmes Division**
-M.Tech (AIML / DSE) · Machine Learning · **Assignment 2**
 
 A comparative study of five supervised classification algorithms on a three-class
 student-outcome prediction problem, delivered as an interactive Streamlit application.
 
 **🔗 GitHub Repository:** https://github.com/2025ac05176-cmd/ml-assignment-2
-**🚀 Live Streamlit App:** _(add your deployed URL here after Step 6)_
+** Live Streamlit App:** https://ml-assignment-2-gxwbvc46spywyqddb8vnnf.streamlit.app/
 
 ---
 
@@ -254,7 +253,7 @@ The dashboard implements all four required features:
 
 | # | Required feature | Implementation |
 |---|---|---|
-| **a** | Dataset upload option (CSV) | Sidebar file uploader accepting the 885-row `test_data.csv` (or any CSV with the same 34 feature columns). Column presence is validated before scoring, with a named error listing anything missing. A bundled-data toggle lets the app open with results already visible. |
+| **a** | Dataset upload option (CSV) | Sidebar file uploader accepting the 885-row `test_data.csv`, or any CSV carrying the same 34 feature columns. **Upload is the default data source** — the app opens asking for a file rather than pre-loading one. Column presence is validated before scoring, with a named error listing anything missing, and the source banner names the uploaded file so it is unambiguous which data produced the results. A bundled fallback is available from the same control for anyone who would rather not download the CSV first. |
 | **b** | Model selection dropdown | Sidebar `selectbox` across all five trained models, each with a short contextual note. An optional **Compare all 5 models** mode scores every model at once into a single ranked table with the best value per metric highlighted. |
 | **c** | Display of evaluation metrics | All six metrics — Accuracy, AUC, Precision, Recall, F1, MCC — rendered as cards, plus one-vs-rest ROC curves per class and a per-class recall breakdown. |
 | **d** | Confusion matrix / classification report | Paired heatmaps (raw counts and row-normalised recall) alongside the full `classification_report` with per-class precision, recall, F1 and support. |
