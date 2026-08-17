@@ -232,22 +232,9 @@ Confusion matrix for the winning Random Forest (rows = actual, columns = predict
 | **Random Forest (Ensemble)** | **Best model on all six metrics** — accuracy 0.7695, AUC 0.9077, MCC 0.6214 — and the only one to exceed 0.6 MCC. Bagging 400 trees over `sqrt(34) ≈ 6` random features per split cancels the variance that hurt the single Decision Tree, converting the field's most unstable learner into its most reliable one; its CV standard deviation of ± 0.007 is the tightest in the study. `class_weight='balanced_subsample'` is what produced the decisive win: `Enrolled` recall of **0.484** is more than double kNN's and Naive Bayes' 0.214, and it is the only model that predicts the minority class at a useful rate. Its +0.207 train/test gap looks alarming next to Logistic Regression's, but for a bagged ensemble a high training accuracy is expected and largely benign — the CV score confirms the test result is real, not luck of the split. |
 | **Overall Winner for your dataset?** | **Random Forest (Ensemble).** It wins every one of the six required metrics outright, and its margin is widest exactly where it matters: MCC (0.6214 vs 0.5977 for the runner-up) is the metric that penalises ignoring the minority class, and `Enrolled` recall (0.484) is where every other model fails. It also has the most stable cross-validation (± 0.007). The honest caveat is cost — it is ~400× the inference work of Logistic Regression for a 2.4-point MCC gain, and it cannot explain a single prediction to a student. **If this system were actually deployed for retention triage, Random Forest is the right choice**, because the 77 `Enrolled` students it correctly identifies (versus 52 for Logistic Regression) are precisely the borderline cases where intervention changes outcomes. Where the output must be defended or audited, Logistic Regression at 98 % of the performance would be the more sensible engineering trade. |
 
-### A note on what none of these models solved
-
-Every model's confusion matrix shows the same failure: `Enrolled` is the hard class,
-with the best recall in the study still under 0.50. This is not a modelling
-deficiency so much as a **label problem**. `Enrolled` means "has not graduated *yet*"
-— it is a censored observation, not a settled outcome. Many of those students will
-eventually graduate and some will eventually drop out, so their feature profiles
-genuinely overlap both other classes. A survival-analysis formulation with
-time-to-event data would fit this problem better than any of the five classifiers
-evaluated here.
-
----
-
 ## Streamlit Application
 
-**🚀 Live app:** _(add your deployed URL here)_
+**🚀 Live app:** https://ml-assignment-2-gxwbvc46spywyqddb8vnnf.streamlit.app/
 
 The dashboard implements all four required features:
 
@@ -258,36 +245,5 @@ The dashboard implements all four required features:
 | **c** | Display of evaluation metrics | All six metrics — Accuracy, AUC, Precision, Recall, F1, MCC — rendered as cards, plus one-vs-rest ROC curves per class and a per-class recall breakdown. |
 | **d** | Confusion matrix / classification report | Paired heatmaps (raw counts and row-normalised recall) alongside the full `classification_report` with per-class precision, recall, F1 and support. |
 
-Additional functionality beyond the requirement: per-row prediction table with
-class probabilities and confidence, a correct/incorrect flag per row, a
-low-confidence row counter, downloadable predictions as CSV, and a data-preview tab
-with descriptive statistics.
 
-The app is organised into four tabs — **Metrics**, **Confusion Matrix**,
-**Predictions**, **Data Preview** — so that results for the different models on the
-uploaded test data are all visible without scrolling.
 
-### Deployment note
-
-`requirements.txt` pins `scikit-learn`, `numpy` and `joblib` to exact versions. The
-five `.pkl` files are unpickled at app start-up, and a major-version drift in any of
-those three breaks deserialisation on Streamlit Community Cloud. Only `test_data.csv`
-(885 rows, ~94 KB) is intended for upload, keeping well inside the free tier's limits.
-
----
-
-## Environment
-
-Developed and executed on **BITS Virtual Lab**. Python 3.11, scikit-learn 1.8.0.
-See the submitted PDF for the execution screenshot.
-
-## Dataset Citation
-
-Realinho, V., Vieira Martins, M., Machado, J., & Baptista, L. (2021).
-*Predict Students' Dropout and Academic Success* [Data set].
-UCI Machine Learning Repository. https://doi.org/10.24432/C5MC89
-Accessed via [Kaggle](https://www.kaggle.com/datasets/thedevastator/higher-education-predictors-of-student-retention). Licensed CC BY 4.0.
-
----
-
-*Submitted for Machine Learning Assignment 2 · M.Tech (AIML/DSE) · BITS Pilani WILP*
