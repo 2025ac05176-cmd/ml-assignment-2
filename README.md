@@ -167,10 +167,6 @@ stratified split of the same dataset.
 | 4 | Naive Bayes | `GaussianNB`, `var_smoothing=1e-8`, scaled | Gaussian chosen over Multinomial because the strongest predictors are continuous grades, and the data contains negative values (`GDP`, `Inflation rate`) which Multinomial NB cannot accept |
 | 5 | Random Forest (Ensemble) | `n_estimators=400`, `max_features='sqrt'`, `min_samples_leaf=2`, `class_weight='balanced_subsample'` | Bagged ensemble; `balanced_subsample` directly targets the minority-class problem |
 
-> **Note on model count.** The assignment text lists five models (Logistic Regression,
-> Decision Tree, kNN, Naive Bayes, Random Forest) while the table header refers to
-> "all the 6 models". This submission implements the **five explicitly named models**,
-> which is the enumerated requirement in Step 2.
 
 ### Metric definitions used
 
